@@ -13,3 +13,4 @@ C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHO
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.BLL\obj\Debug\net10.0\refint\KASHOP.BLL.dll
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.BLL\obj\Debug\net10.0\KASHOP.BLL.pdb
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.BLL\obj\Debug\net10.0\ref\KASHOP.BLL.dll
+C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.BLL\obj\Debug\net10.0\KASHOP.BLL.sourcelink.json
