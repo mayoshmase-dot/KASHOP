@@ -10,7 +10,7 @@ namespace KASHOP.DAL.Data
     {
          public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
-
+        public DbSet<CategoryTranslation> CategoriesTranslation { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { 
         }
     }

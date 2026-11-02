@@ -1,4 +1,6 @@
-﻿using KASHOP.DAL.Data;
+﻿using KASHOP.BLL;
+using KASHOP.DAL.Data;
+using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.Models;
 using KASHOP.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -11,36 +13,44 @@ namespace KASHOP.PL.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly IGenericRepository<Category> _repository;
+        private readonly ICategoryService _service;
 
-        public CategoriesController(IGenericRepository<Category> repository)
+        public CategoriesController(ICategoryService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         [HttpGet("")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken = default)
         {
-            var categories = _repository.Get();
+            var categories = await _service.GetAllAsync(cancellationToken);
             return Ok(categories);
         }
-        //[HttpGet("{id}")]
-        //public IActionResult GetById(int id)
-        //{
-        //    var category = context.Categories.Find(id);
-        //    return Ok(category);
-        //}
         [HttpPost("")]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(CategoryRequest request  , CancellationToken cancellationToken = default)
         {
-            _repository.Create( category);
-            return Ok();
+            var result = await _service.CreateAsync(request, cancellationToken);
+            return result ? Ok() :BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            var result = await _service.GetByIdAsync(id , cancellationToken);
+            return result is not null ? Ok(result) : BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken = default)
+        {
+            var result = await _service.RemoveAsync(id, cancellationToken);
+            return result ? NoContent() : BadRequest();
         }
 
         /* [HttpPatch("")]
          public IActionResult Update(Category category)
          {
-            _repository.Update(category);
+             _service.Update(category);
              return Ok();
          }*/
     }

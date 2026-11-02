@@ -7,8 +7,8 @@ namespace KASHOP.DAL.Models
     public class Category
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null;
         public bool Status { get; set; }
+        public List<CategoryTranslation> Translations { get; set; } = new();
 
     }
 }

@@ -1,14 +1,19 @@
-﻿using System;
+﻿using KASHOP.DAL.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace KASHOP.DAL.Repositories
 {
-    public interface IGenericRepository <T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
-        void Create(T entity);
-        void Update(T entity);
-        void Remove(T entity);
-        List<T> Get();
+        Task CreateAsync(T entity, CancellationToken cancellationToken = default);
+        Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
+        Task RemoveAsync(T entity, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAsync(Expression<Func<T, bool>>? filter = null, List<Expression<Func<T, object>>>? includes = null,
+              bool tracked = false, CancellationToken cancellationToken = default);
+        Task<T?> GetOneAsync(Expression<Func<T, bool>>? filter = null, List<Expression<Func<T, object>>>? includes = null,
+                bool tracked = false, CancellationToken cancellationToken = default);
     }
 }

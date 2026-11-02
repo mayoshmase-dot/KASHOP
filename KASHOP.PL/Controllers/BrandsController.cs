@@ -19,19 +19,19 @@ namespace KASHOP.PL.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
-            var brands = _repository.Get();
+            var brands =  _repository.GetAsync();
             return Ok(brands);
         }
         //[HttpGet("{id}")]
-        //public IActionResult GetById(int id)
+        //public IActionResult GetByIdAsync(int id)
         //{
         //    var brand = context.Brands.Find(id);
         //    return Ok(brand);
         //}
         [HttpPost("")]
-        public IActionResult Create(Brand brand)
+        public async Task<IActionResult> CreateAsync(Brand brand)
         {
-            _repository.Create(brand);
+            _repository.CreateAsync(brand);
             return Ok();
         }
 
