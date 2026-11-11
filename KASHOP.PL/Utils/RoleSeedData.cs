@@ -6,17 +6,22 @@ namespace KASHOP.PL.Utils
     {
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleSeedData(RoleManager<IdentityRole> roleManager) {
+        public RoleSeedData(RoleManager<IdentityRole> roleManager)
+        {
 
             _roleManager = roleManager;
         }
 
         public async Task DataSeed()
         {
-            string[] Roles = { "SuperAdmin" , "Admin" , "User" }; 
-            foreach (var role in Roles) {
-                if(!await _roleManager.RoleExistsAsync(role)) {
+            string[] Roles = { "SuperAdmin", "Admin", "User" };
+            foreach (var role in Roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
                     await _roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
     }
-}
+};

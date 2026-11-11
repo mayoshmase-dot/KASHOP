@@ -12,7 +12,7 @@ namespace KASHOP.BLL.Settings
     {
         private readonly UserManager<ApplictionUser> _userManager;
 
-        public AuthService(UserManager<ApplictionUser> userManager)
+        public AuthService(UserManager<ApplictionUser> userManager )
         {
             _userManager = userManager;
         }

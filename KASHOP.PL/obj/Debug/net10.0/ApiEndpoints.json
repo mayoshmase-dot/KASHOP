@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "KASHOP.PL.Controllers.AuthController",
+    "Method": "Create",
+    "RelativePath": "api/Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "KASHOP.DAL.DTO.Request.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "KASHOP.PL.Controllers.BrandsController",
     "Method": "Index",
     "RelativePath": "api/Brands",
