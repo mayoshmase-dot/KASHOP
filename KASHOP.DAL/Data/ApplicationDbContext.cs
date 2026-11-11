@@ -1,4 +1,5 @@
 ﻿using KASHOP.DAL.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace KASHOP.DAL.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplictionUser>
     {
          public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslation> CategoriesTranslation { get; set; }

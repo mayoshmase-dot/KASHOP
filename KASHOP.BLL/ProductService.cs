@@ -4,9 +4,7 @@ using KASHOP.DAL.DTO.Responses;
 using KASHOP.DAL.Models;
 using KASHOP.DAL.Repositories;
 using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace KASHOP.BLL
 {

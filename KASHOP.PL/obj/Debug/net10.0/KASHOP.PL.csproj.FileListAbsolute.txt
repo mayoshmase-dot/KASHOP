@@ -174,3 +174,4 @@ C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHO
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.PL\bin\Debug\net10.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.PL\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.PL\bin\Debug\net10.0\KASHOP.PL.staticwebassets.runtime.json
+C:\Users\Administrator\OneDrive\المستندات\Full stack\Back End\api\KASHOP\KASHOP.PL\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
