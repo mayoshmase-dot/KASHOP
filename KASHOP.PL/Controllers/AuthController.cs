@@ -27,5 +27,15 @@ namespace KASHOP.PL.Controllers
 
             return Ok(new { message = "User registered successfully" });
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken = default)
+        {
+            var (success, errors , response) = await _authService.LoginAsync(request);
+
+            if (!success)
+                return BadRequest(new { errors });
+
+            return Ok(response);
+        }
     }
 }

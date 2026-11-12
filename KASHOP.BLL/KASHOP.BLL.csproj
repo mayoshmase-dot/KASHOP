@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include ="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="Mapster" Version="10.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />

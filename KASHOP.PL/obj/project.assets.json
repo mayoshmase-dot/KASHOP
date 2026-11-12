@@ -1182,7 +1182,10 @@
         },
         "runtime": {
           "bin/placeholder/KASHOP.BLL.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "KASHOP.DAL/1.0.0": {
         "type": "project",
