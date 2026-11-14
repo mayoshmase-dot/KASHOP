@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "huJqy0xeF4I=",
+  "dgSpecHash": "w4yjnIih3ts=",
   "success": true,
   "projectFilePath": "C:\\Users\\Administrator\\OneDrive\\المستندات\\Full stack\\Back End\\api\\KASHOP\\KASHOP.BLL\\KASHOP.BLL.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,6 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\mapster\\10.0.13\\mapster.10.0.13.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\mapster.core\\10.0.13\\mapster.core.10.0.13.nupkg.sha512",
-    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.data.sqlclient\\6.1.6\\microsoft.data.sqlclient.6.1.6.nupkg.sha512",
@@ -36,18 +35,5 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.13\\system.security.cryptography.pkcs.10.0.13.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.11\\system.security.cryptography.protecteddata.9.0.11.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1510",
-      "level": "Warning",
-      "message": "PackageReference Microsoft.AspNetCore.Http.Features will not be pruned. This package is automatically available and does not need to be referenced explicitly. Remove the PackageReference item.",
-      "projectPath": "C:\\Users\\Administrator\\OneDrive\\المستندات\\Full stack\\Back End\\api\\KASHOP\\KASHOP.BLL\\KASHOP.BLL.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\Administrator\\OneDrive\\المستندات\\Full stack\\Back End\\api\\KASHOP\\KASHOP.BLL\\KASHOP.BLL.csproj",
-      "libraryId": "Microsoft.AspNetCore.Http.Features",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

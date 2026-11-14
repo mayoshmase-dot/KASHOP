@@ -45,7 +45,7 @@ namespace KASHOP.PL
             builder.Services.AddScoped<ISeedData, RoleSeedData>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
-
+            builder.Services.AddTransient<IEmailService, EmailService>();
 
             builder.Services.AddIdentity<ApplictionUser , IdentityRole>(options =>
             {
@@ -59,6 +59,7 @@ namespace KASHOP.PL
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.Lockout.AllowedForNewUsers = true;
+                options.User.RequireUniqueEmail=true;
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             builder.Services.AddAuthentication(options =>

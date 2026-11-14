@@ -37,7 +37,7 @@ namespace KASHOP.BLL.Settings
            issuer: _configuration["Jwt:Issuer"],
            audience: _configuration["Jwt:Audience"],
            claims: userClaims,
-           expires: DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:ExpireMinutes"]!)),
+           expires: DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:DurationInMunites"]!)),
            signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
        );
             return new JwtSecurityTokenHandler().WriteToken(token);

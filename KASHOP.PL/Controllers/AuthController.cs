@@ -32,10 +32,16 @@ namespace KASHOP.PL.Controllers
         {
             var (success, errors , response) = await _authService.LoginAsync(request);
 
-            if (!success)
-                return BadRequest(new { errors });
+            return success ? Ok(response) : BadRequest(new { errors });
+        }
 
-            return Ok(response);
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string userId , [FromQuery] string token )
+        {
+            var (success, errors) = await _authService.ConfirmEmailAsync(userId,token);
+
+          
+            return success ? Ok("done"): BadRequest(new { errors });
         }
     }
 }
