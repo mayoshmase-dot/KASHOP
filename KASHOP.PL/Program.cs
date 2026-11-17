@@ -46,6 +46,7 @@ namespace KASHOP.PL
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddTransient<IEmailService, EmailService>();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddIdentity<ApplictionUser , IdentityRole>(options =>
             {

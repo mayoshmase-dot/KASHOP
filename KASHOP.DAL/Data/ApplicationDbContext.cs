@@ -1,23 +1,24 @@
 ﻿using KASHOP.DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace KASHOP.DAL.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplictionUser>
     {
-         public DbSet<Category> Categories { get; set; }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslation> CategoriesTranslation { get; set; }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTranslation> ProductTranslation { get; set; }
 
         public DbSet<Brand> Brands { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { 
-        
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        {
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,5 +40,29 @@ namespace KASHOP.DAL.Data
             });
         }
 
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var now = DateTime.UtcNow;
+
+            foreach (var entry in ChangeTracker.Entries<AudiTableEntity>())
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = now;
+                    entry.Entity.CreatedById = userId;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = now;
+                    entry.Entity.UpdatedById = userId;
+                    entry.Property(e => e.CreatedById).IsModified = false;
+                    entry.Property(e => e.CreatedAt).IsModified = false;
+                }
+            }
+                return base.SaveChanges(acceptAllChangesOnSuccess);
+            
+
+        }
     }
 }
