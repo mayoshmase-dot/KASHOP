@@ -51,12 +51,12 @@ namespace KASHOP.BLL.Settings
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, true);
             if (result.IsNotAllowed)
             {
-                return Result<LoginResponses>.UnAuthorized(["confirm your email"]);
+                return Result<LoginResponses>.Forbidden(["confirm your email"]);
             }
 
             if (result.IsLockedOut)
                 {
-                return Result<LoginResponses>.UnAuthorized(["Account is locked , try again alter"]);
+                return Result<LoginResponses>.Forbidden(["Account is locked , try again alter"]);
                 }
             if (!result.Succeeded)
             {
