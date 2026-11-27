@@ -1,4 +1,5 @@
 ﻿using KASHOP.BLL;
+using KASHOP.BLL.Common;
 using KASHOP.BLL.Settings;
 using KASHOP.DAL.DTO.Request;
 using Microsoft.AspNetCore.Http;
@@ -20,28 +21,26 @@ namespace KASHOP.PL.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Create(RegisterRequest request, CancellationToken cancellationToken = default)
         {
-            var (success, errors) = await _authService.RegisterAsync(request);
+            var result = await _authService.RegisterAsync(request);
 
-            if (!success)
-                return BadRequest(new { errors });
+            return result.IsSuccess ? Ok(result.Data) : BadRequest(new { errors = result.Errors });
 
-            return Ok(new { message = "User registered successfully" });
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken = default)
         {
-            var (success, errors , response) = await _authService.LoginAsync(request);
+            var result = await _authService.LoginAsync(request);
 
-            return success ? Ok(response) : BadRequest(new { errors });
+            return result.IsSuccess ? Ok(result.Data) : BadRequest(new { errors = result.Errors });
         }
 
         [HttpGet("confirm-email")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] string userId , [FromQuery] string token )
         {
-            var (success, errors) = await _authService.ConfirmEmailAsync(userId,token);
+            var result = await _authService.ConfirmEmailAsync(userId,token);
 
           
-            return success ? Ok("done"): BadRequest(new { errors });
+            return result.IsSuccess ? Ok(result.Data): BadRequest(new { errors = result.Errors});
         }
     }
 }

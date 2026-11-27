@@ -42,19 +42,21 @@ namespace KASHOP.PL.Controllers
             return result is not null ? Ok(result) : BadRequest();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken = default)
-        {
-            var result = await _service.RemoveAsync(id, cancellationToken);
-            return result ? NoContent() : BadRequest();
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        //{
+        //    var result = await _service.RemoveAsync(id, cancellationToken);
 
-        /* [HttpPatch("")]
-         public IActionResult Update(Category category)
-         {
-             _service.Update(category);
-             return Ok();
-         }*/
+        //    if (result.IsSuccess)
+        //        return NoContent();
+        //    else if (result.ErrorType == BLL.Common.ErrorType.NotFound)
+        //        return NotFound(new { errors = result.Errors });
+        //    else if (result.ErrorType == BLL.Common.ErrorType.Conflict)
+        //        return Conflict(new { errors = result.Errors });
+        //    else
+        //        return BadRequest(new { errors = result.Errors });
+        //}
+      
     }
 }
 

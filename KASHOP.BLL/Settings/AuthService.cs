@@ -1,13 +1,10 @@
-﻿using KASHOP.DAL.DTO.Request;
+﻿using KASHOP.BLL.Common;
+using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.DTO.Responses;
 using KASHOP.DAL.Models;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace KASHOP.BLL.Settings
 {
@@ -29,12 +26,12 @@ namespace KASHOP.BLL.Settings
             _emailService = emailService;
             _signInManager = signInManager;
         }
-        public async Task<(bool Success, List<string> Errors)> RegisterAsync(RegisterRequest request)
+        public async Task<Result< bool >> RegisterAsync(RegisterRequest request)
         {
             var user = request.Adapt<ApplictionUser>();
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
-             return (false, result.Errors.Select(e => e.Description).ToList());
+                return Result<bool>.Validation(result.Errors.Select(e => e.Description).ToList());
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var anCodedToken = Uri.EscapeDataString(token);
             var link = $"https://localhost:7213/api/auth/confirm-email?userId={user.Id}&token={anCodedToken}";
@@ -42,50 +39,45 @@ namespace KASHOP.BLL.Settings
             "<p>Please confirm your email by clicking the link below</p>" +
             $"<a href={link}>Confirm Email</a></div>");
             await _userManager.AddToRoleAsync(user, "User");
-            return (true, []);
+            return Result<bool>.Success(true);
         }
 
-        public async Task<(bool Success, List<string> Errors, LoginResponses response)> LoginAsync(LoginRequest request)
+        public async Task<Result<LoginResponses>> LoginAsync(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user is null)
-              return (false , ["invaid email or password"] , null);
+            if (user is null)
+                return Result<LoginResponses>.UnAuthorized(["invaid email or password"]);
          
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, true);
             if (result.IsNotAllowed)
             {
-                return (false, ["confirm your email"], null);
-
+                return Result<LoginResponses>.UnAuthorized(["confirm your email"]);
             }
 
             if (result.IsLockedOut)
                 {
-                    return (false, ["Account is locked , try again alter"], null);
+                return Result<LoginResponses>.UnAuthorized(["Account is locked , try again alter"]);
                 }
             if (!result.Succeeded)
             {
-                return (false, ["invaid email or password"], null);
+                return Result<LoginResponses>.UnAuthorized(["invaid email or password"]);
             }
 
             var token = await _tokenService.GenerateJwt(user);
-            var response = new LoginResponses()
-            {
-                Token = token
-
-            };
-            return (true , [] , response);
+            return Result<LoginResponses>.Success(new LoginResponses { Token = token});
         }
 
-        public async Task<(bool Success, string? Errors)> ConfirmEmailAsync(string userId, string token)
+        public async Task<Result<bool>> ConfirmEmailAsync(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user is null)
-                return (false, "invaid confirmation link");
+                return Result<bool>.Validation(["invaid confirmation link"]);
+
             if (user.EmailConfirmed)
-                return (true, null);
+                return Result<bool>.Success(true);
 
             var result = await _userManager.ConfirmEmailAsync(user , token);
-            return result.Succeeded ? (true, null) : (false, "invalid or expired confirm link"); 
+            return result.Succeeded ? Result<bool>.Success(true) : Result<bool>.Validation([""]) ; 
         }
 
     }

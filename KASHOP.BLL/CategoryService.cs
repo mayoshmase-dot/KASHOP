@@ -1,12 +1,10 @@
-﻿using KASHOP.BLL.Settings;
+﻿using KASHOP.BLL.Common;
+using KASHOP.BLL.Settings;
 using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.DTO.Responses;
 using KASHOP.DAL.Models;
 using KASHOP.DAL.Repositories;
 using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KASHOP.BLL
 {
@@ -53,18 +51,26 @@ namespace KASHOP.BLL
             return categories.Adapt<CategoryResponses?>();
         }
 
-        public async Task<bool> RemoveAsync(int Id , CancellationToken cancellationToken = default)
+        public async Task<Result<bool>> RemoveAsync(int id, CancellationToken cancellationToken = default)
         {
             var category = await _repo.GetOneAsync(
-                filter: c => c.Id == Id,
+                filter: c => c.Id == id,
                 includes: [c => c.Translations],
-                cancellationToken: cancellationToken
-                );
-            if(category is   null) return false;
-            await _repo.RemoveAsync(category, cancellationToken);
-            return true;
-        }
+                cancellationToken: cancellationToken);
 
+            if (category is null)
+                return Result<bool>.NotFound(["Category not found"]);
+
+            var hasProducts = await _repo.GetOneAsync(
+                filter: c => c.Id == id && c.Products.Any(),
+                cancellationToken: cancellationToken);
+
+            if (hasProducts is not null)
+                return Result<bool>.Conflict(["Can't delete a category that has products"]);
+
+            await _repo.RemoveAsync(category, cancellationToken);
+            return Result<bool>.Success(true);
+        }
         public Task<bool> UpdateAsync(int Id, CategoryResponses request, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

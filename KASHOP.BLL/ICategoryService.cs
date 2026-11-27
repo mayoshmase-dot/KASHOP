@@ -1,9 +1,6 @@
-﻿using KASHOP.DAL.DTO.Request;
+﻿using KASHOP.BLL.Common;
+using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.DTO.Responses;
-using KASHOP.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KASHOP.BLL
 {
@@ -13,7 +10,7 @@ namespace KASHOP.BLL
         Task<CategoryResponses?> GetByIdAsync(int id , CancellationToken cancellationToken = default);
         Task<bool> CreateAsync(CategoryRequest request, CancellationToken cancellationToken = default);
         Task<bool> UpdateAsync(int Id ,CategoryResponses request , CancellationToken cancellationToken = default);
-        Task<bool> RemoveAsync(int Id , CancellationToken cancellationToken = default);
+        Task <Result<bool>> RemoveAsync(int Id , CancellationToken cancellationToken = default);
 
     }
 }
