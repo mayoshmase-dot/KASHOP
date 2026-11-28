@@ -24,7 +24,7 @@ namespace KASHOP.BLL
             return categories.Adapt<List<CategoryResponses>>();
         }
 
-        public async Task<Result<CategoryResponses?>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Result<CategoryResponses>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var category = await _repo.GetOneAsync(
                 filter: c => c.Id == id,
@@ -74,7 +74,7 @@ namespace KASHOP.BLL
             category.Status = request.Status;
             foreach (var translation in request.Translations)
             {
-                var existingTranslation = category.Translations.FirstOrDefault(t=>t.Language == translation.Language);
+               var existingTranslation = category.Translations.FirstOrDefault(t=>t.Language == translation.Language);
             existingTranslation.Name = translation.Name;
             }
             await _repo.UpdateAsync(category, cancellationToken);
