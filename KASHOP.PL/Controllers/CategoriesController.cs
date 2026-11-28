@@ -1,12 +1,8 @@
 ﻿using KASHOP.BLL;
-using KASHOP.DAL.Data;
 using KASHOP.DAL.DTO.Request;
-using KASHOP.DAL.Models;
-using KASHOP.DAL.Repositories;
+using KASHOP.PL.Extenstions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace KASHOP.PL.Controllers
 {
@@ -32,31 +28,34 @@ namespace KASHOP.PL.Controllers
         public async Task<IActionResult> Create(CategoryRequest request  , CancellationToken cancellationToken = default)
         {
             var result = await _service.CreateAsync(request, cancellationToken);
-            return result ? Ok() :BadRequest();
+            return result.IsSuccess ? Ok() : result.ToErrorResponse();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
         {
             var result = await _service.GetByIdAsync(id , cancellationToken);
-            return result is not null ? Ok(result) : BadRequest();
+            return result.IsSuccess ? Ok() : result.ToErrorResponse();
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
-        //{
-        //    var result = await _service.RemoveAsync(id, cancellationToken);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        {
+            var result = await _service.RemoveAsync(id, cancellationToken);
 
-        //    if (result.IsSuccess)
-        //        return NoContent();
-        //    else if (result.ErrorType == BLL.Common.ErrorType.NotFound)
-        //        return NotFound(new { errors = result.Errors });
-        //    else if (result.ErrorType == BLL.Common.ErrorType.Conflict)
-        //        return Conflict(new { errors = result.Errors });
-        //    else
-        //        return BadRequest(new { errors = result.Errors });
-        //}
-      
+            return result.IsSuccess ? NoContent() : result.ToErrorResponse();
+
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CategoryRequest request ,CancellationToken cancellationToken)
+        {
+            var result = await _service.UpdateAsync(id, request,cancellationToken);
+
+            return result.IsSuccess ? NoContent() : result.ToErrorResponse();
+
+        }
+
     }
 }
 

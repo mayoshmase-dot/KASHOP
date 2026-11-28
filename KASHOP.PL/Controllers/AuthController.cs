@@ -2,6 +2,7 @@
 using KASHOP.BLL.Common;
 using KASHOP.BLL.Settings;
 using KASHOP.DAL.DTO.Request;
+using KASHOP.PL.Extenstions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace KASHOP.PL.Controllers
         {
             var result = await _authService.RegisterAsync(request);
 
-            return result.IsSuccess ? Ok(result.Data) : BadRequest(new { errors = result.Errors });
+            return result.IsSuccess ? Ok() : result.ToErrorResponse();
 
         }
         [HttpPost("login")]
@@ -31,7 +32,7 @@ namespace KASHOP.PL.Controllers
         {
             var result = await _authService.LoginAsync(request);
 
-            return result.IsSuccess ? Ok(result.Data) : BadRequest(new { errors = result.Errors });
+            return result.IsSuccess ? Ok() : result.ToErrorResponse();
         }
 
         [HttpGet("confirm-email")]
@@ -39,8 +40,7 @@ namespace KASHOP.PL.Controllers
         {
             var result = await _authService.ConfirmEmailAsync(userId,token);
 
-          
-            return result.IsSuccess ? Ok(result.Data): BadRequest(new { errors = result.Errors});
+            return result.IsSuccess ? Ok() : result.ToErrorResponse();
         }
     }
 }
